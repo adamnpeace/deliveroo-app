@@ -17,19 +17,6 @@ export default function LinksScreen() {
           WebBrowser.openBrowserAsync("https://deliveroo.co.uk/account")
         }
       />
-      {/* 
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-      />
-
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-        isLastOption
-      /> */}
     </ScrollView>
   );
 }

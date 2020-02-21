@@ -86,14 +86,7 @@ export default class HomeScreen extends React.Component {
             style={styles.welcomeImage}
           />
           <TextInput
-            style={{
-              height: 40,
-              width: width * 0.88,
-              backgroundColor: "#eee",
-              padding: 5,
-              borderRadius: 5,
-              marginBottom: 5
-            }}
+            style={styles.searchBar}
             placeholder="Search..."
             onChangeText={text => this.setState({ text })}
           />
@@ -115,7 +108,6 @@ export default class HomeScreen extends React.Component {
             .slice(1, 10)}
           renderItem={({ item }) => {
             var key = Object.keys(item.restaurant_branches)[0];
-            console.log(item.restaurant_branches[key].image[0]);
             return (
               <View style={styles.restaurantLinkContainer}>
                 <View style={styles.restaurantContainer}>
@@ -198,6 +190,14 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: 20
   },
+  searchBar: {
+    height: 40,
+    width: width * 0.95 - 50,
+    backgroundColor: "#eee",
+    padding: 5,
+    borderRadius: 5,
+    marginBottom: 5
+  },
   welcomeContainer: {
     backgroundColor: "#fff0",
     alignItems: "center",
@@ -205,6 +205,8 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   welcomeImage: {
+    marginLeft: 10,
+    marginRight: 10,
     width: 40,
     height: 40,
     resizeMode: "contain"
