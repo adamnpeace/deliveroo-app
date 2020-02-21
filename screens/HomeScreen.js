@@ -16,6 +16,28 @@ import * as WebBrowser from "expo-web-browser";
 import { MonoText, TitleText } from "../components/StyledText";
 const { width } = Dimensions.get("window");
 
+const emojiMappings = {
+  "🌽":
+    "https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🍔":
+    "https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🍤":
+    "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🥖":
+    "https://images.unsplash.com/photo-1521986329282-0436c1f1e212?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🍟":
+    "https://images.unsplash.com/photo-1426869981800-95ebf51ce900?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🍱":
+    "https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🥡":
+    "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🥞":
+    "https://images.unsplash.com/photo-1541288097308-7b8e3f58c4c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🥟":
+    "https://images.unsplash.com/photo-1545668855-b923f0176935?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40",
+  "🥐":
+    "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40"
+};
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -78,7 +100,8 @@ export default class HomeScreen extends React.Component {
                   >
                     <Image
                       source={{
-                        uri: ting[item.restaurant_branches[key].image[0]]
+                        uri:
+                          emojiMappings[item.restaurant_branches[key].image[0]]
                       }}
                       style={styles.restaurantImage}
                     />
