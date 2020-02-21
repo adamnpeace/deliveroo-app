@@ -14,9 +14,7 @@ export default function LinksScreen() {
         icon="md-person"
         label="View your account details"
         onPress={() =>
-          WebBrowser.openBrowserAsync(
-            "https://deliveroo.co.uk/login?redirect=%2F"
-          )
+          WebBrowser.openBrowserAsync("https://deliveroo.co.uk/account")
         }
       />
       {/* 

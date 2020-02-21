@@ -7,6 +7,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View
 } from "react-native";
@@ -38,14 +39,16 @@ const emojiMappings = {
   "🥐":
     "https://images.unsplash.com/photo-1555507036-ab1f4038808a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=40"
 };
+
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true };
+    this.state = { isLoading: true, text: "" };
   }
   componentDidMount() {
     return fetch(
-      "https://cors-anywhere.herokuapp.com/roo-api-sandbox.deliveroo.net/restaurants",
+      // "https://cors-anywhere.herokuapp.com/roo-api-sandbox.deliveroo.net/restaurants",
+      "https://roo-api-sandbox.deliveroo.net/restaurants",
       {
         headers: {
           "api-key": "4578fa93-d005-4375-b7e1-6ce620d183d0",
@@ -70,25 +73,47 @@ export default class HomeScreen extends React.Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <View style={{ flex: 1, padding: 20 }}>
+        <View style={{ flex: 1, padding: 20, margin: 10 }}>
           <ActivityIndicator />
         </View>
       );
     }
     return (
       <View style={styles.container}>
-        <View style={styles.welcomeContainer}>
+        <View style={{ flexDirection: "row", paddingTop: 20 }}>
           <Image
             source={require("../assets/images/roo-logo.png")}
             style={styles.welcomeImage}
+          />
+          <TextInput
+            style={{
+              height: 40,
+              width: width * 0.88,
+              backgroundColor: "#eee",
+              padding: 5,
+              borderRadius: 5,
+              marginBottom: 5
+            }}
+            placeholder="Search..."
+            onChangeText={text => this.setState({ text })}
           />
         </View>
 
         <FlatList
           contentContainerStyle={styles.contentContainer}
           style={{ paddingBottom: 10 }}
-          data={this.state.dataSource.slice(1, 10)}
-          renderItem={({ index, item }) => {
+          data={this.state.dataSource
+            .filter(
+              item =>
+                (item.restaurant_branches[
+                  Object.keys(item.restaurant_branches)[0]
+                ].status[0] === "OPEN" &&
+                  item.restaurant_org.includes(this.state.text)) ||
+                (this.state.text !== "" &&
+                  item.restaurant_org.includes(this.state.text))
+            )
+            .slice(1, 10)}
+          renderItem={({ item }) => {
             var key = Object.keys(item.restaurant_branches)[0];
             console.log(item.restaurant_branches[key].image[0]);
             return (
@@ -108,12 +133,33 @@ export default class HomeScreen extends React.Component {
                     <View style={styles.restaurantBodyContainer}>
                       <Text style={styles.restaurantName}>
                         {item.restaurant_org}
+                        {item.restaurant_branches[key].status[0] == "CLOSED" &&
+                          "  (CLOSED)"}
                       </Text>
                       <View style={{ flexDirection: "row" }}>
-                        <Icon name="md-star" size={18} color="#11cc55" />
-                        <Text style={{ fontSize: 15, color: "#11cc55" }}>
+                        <Icon
+                          name="md-star"
+                          size={18}
+                          color={
+                            item.restaurant_branches[key].rating > 4
+                              ? "#01ab4d"
+                              : "#ffa502"
+                          }
+                        />
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            color:
+                              item.restaurant_branches[key].rating > 4
+                                ? "#01ab4d"
+                                : "#ffa502"
+                          }}
+                        >
                           {` `}
                           {item.restaurant_branches[key].rating}
+                          {item.restaurant_branches[key].rating > 4
+                            ? " Excellent"
+                            : " Good"}
                         </Text>
                       </View>
                     </View>
@@ -159,8 +205,8 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   welcomeImage: {
-    width: 140,
-    height: 140,
+    width: 40,
+    height: 40,
     resizeMode: "contain"
   },
   tabBarInfoContainer: {
